@@ -114,8 +114,9 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 
 # To Optionally to hide the “user@hostname” info when you’re logged in as yourself on your local machine, add prompt_context(){} at the bottom of your ~/.zshrc. 
 prompt_context() {
-  if [[ "$USER" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then
-    prompt_segment $CURRENT_BG default "%(!.%{%F{yellow}%}.)$USER@$HOST"
+  if [[ -n "$SSH_CLIENT" ]]; then
+    # Additional condition would be "$USER" != "$DEFAULT_USER", but it doesnt work well, because default user is not set
+    prompt_segment $CURRENT_BG default "%(!.%{%F{yellow}%}.)$USER@$HOST "
   else
     if [[ $(date +"%m%d") = "0501" ]]; then   # 1st May
       prompt_segment $CURRENT_BG default "%(!.%{%F{yellow}%}.)🇦🇹 "
