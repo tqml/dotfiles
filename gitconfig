@@ -1,0 +1,5 @@
+[user]
+	name = Benjamin K
+	email = benjamin.kulnik@student.tuwien.ac.at
+[core]
+	excludesfile = ~/.gitignore
