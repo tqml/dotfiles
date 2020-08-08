@@ -14,7 +14,7 @@ olddir=~/dotfiles_old             # old dotfiles backup directory
 #----------------------
 # Specify your files here
 # list of files/folders to symlink in homedir
-files="alacritty.yml anyconnect bash_profile gitconfig gitignore profile zprofile zshrc"    
+files="alacritty.yml anyconnect bash_profile gitconfig gitignore profile zprofile zshrc oh-my-zsh"    
 
 ##########
 

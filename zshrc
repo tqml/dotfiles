@@ -136,4 +136,5 @@ prompt_dir() {
 
 
 source ~/.zprofile
+source ~/.profile
 export PATH="/usr/local/sbin:$PATH"
