@@ -115,7 +115,8 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 # To Optionally to hide the “user@hostname” info when you’re logged in as yourself on your local machine, add prompt_context(){} at the bottom of your ~/.zshrc. 
 prompt_context() {
   if [[ "$USER" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then
-    # prompt_segment black default "%(!.%{%F{yellow}%}.)$USER"
+    prompt_segment $CURRENT_BG default "%(!.%{%F{yellow}%}.)$USER@$HOST"
+  else
     if [[ $(date +"%m%d") = "0501" ]]; then   # 1st May
       prompt_segment $CURRENT_BG default "%(!.%{%F{yellow}%}.)🇦🇹 "
     elif [[ $(date +"%m%d") = "1224" ]]; then # Christmas
@@ -131,6 +132,7 @@ prompt_context() {
 # Taken from: https://github.com/agnoster/agnoster-zsh-theme/issues/19
 prompt_dir() {
   # prompt_segment blue black '%~'
+  # Limits the viisble path dir levels to 3
   prompt_segment blue black "%(5~|%-1~/…/%3~|%4~)"
 }
 
