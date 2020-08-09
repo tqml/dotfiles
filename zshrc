@@ -70,7 +70,7 @@ ZSH_THEME="agnoster"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git brew pyenv docker web-search)
+plugins=(git brew pyenv docker docker-compose web-search)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -116,7 +116,7 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 prompt_context() {
   if [[ -n "$SSH_CLIENT" ]]; then
     # Additional condition would be "$USER" != "$DEFAULT_USER", but it doesnt work well, because default user is not set
-    prompt_segment $CURRENT_BG default "%(!.%{%F{yellow}%}.)$USER@$HOST "
+    prompt_segment black default "$USER@$HOST "
   else
     if [[ $(date +"%m%d") = "0501" ]]; then   # 1st May
       prompt_segment $CURRENT_BG default "%(!.%{%F{yellow}%}.)🇦🇹 "
@@ -124,7 +124,7 @@ prompt_context() {
       prompt_segment $CURRENT_BG default "%(!.%{%F{yellow}%}.)🎄 "
     else
       # prompt_segment $CURRENT_BG default "%(!.%{%F{yellow}%}.)🤯 "
-      prompt_segment black default "🌱 "
+      prompt_segment $CURRENT_BG default "🌱 "
     fi
   fi
 }
