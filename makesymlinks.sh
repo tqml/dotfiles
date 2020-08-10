@@ -14,7 +14,7 @@ olddir=~/dotfiles_old             # old dotfiles backup directory
 #----------------------
 # Specify your files here
 # list of files/folders to symlink in homedir
-files="alacritty.yml bash_profile gitconfig gitignore profile zprofile zshrc oh-my-zsh"    
+files="alacritty.yml bash_profile iterm-config gitconfig gitignore profile zprofile zshrc oh-my-zsh"    
 
 ##########
 
@@ -69,3 +69,11 @@ fi
 }
 
 install_zsh
+
+
+
+# Install Autosuggestions
+git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+
+# Install Powerlevel9k Theme
+git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k

@@ -3,8 +3,9 @@
 export EDITOR=nano
 export PATH="$HOME/.cargo/bin:$PATH"
 
+# ------------------
+# -- Custom Aliases
+# ------------------
 
-# set Aliases
 alias weather="curl wttr.in/vie"
-
-
+alias wsearch="web_search duckduckgo"
