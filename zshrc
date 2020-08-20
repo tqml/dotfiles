@@ -133,7 +133,7 @@ prompt_context() {
       prompt_segment $CURRENT_BG default "%(!.%{%F{yellow}%}.)🎄 "
     else
       # prompt_segment $CURRENT_BG default "%(!.%{%F{yellow}%}.)🤯 "
-      prompt_segment $CURRENT_BG default "🌱 "
+      prompt_segment $CURRENT_BG default "🌱🌕 "
     fi
   fi
 }
