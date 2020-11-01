@@ -13,3 +13,8 @@ Clone the repository to `~/dotfiles` then run the `makesymlinks.sh` script. This
 ## Credit
 
 Credit for the `makesymlinks` script goes to [michaeljsmalley](https://github.com/michaeljsmalley/dotfiles).
+
+
+## Information & Help
+
+Information about the ZSH on the [ubuntuusers.de (german)](https://wiki.ubuntuusers.de/Zsh/)

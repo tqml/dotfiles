@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="$HOME/dotfiles/oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -71,7 +71,8 @@ ZSH_THEME="agnoster"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git 
+plugins=(
+  git 
 	brew 
 	pyenv 
 	docker 
@@ -83,6 +84,10 @@ plugins=(git
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
+
+# Declere GPG2 as GPG as they have almost the same CLI arguments
+# Found here: https://unix.stackexchange.com/questions/188945/zsh-gpg2-autocompletion
+compdef gpg2=gpg
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
@@ -133,7 +138,7 @@ prompt_context() {
       prompt_segment $CURRENT_BG default "%(!.%{%F{yellow}%}.)🎄 "
     else
       # prompt_segment $CURRENT_BG default "%(!.%{%F{yellow}%}.)🤯 "
-      prompt_segment $CURRENT_BG default "🌱🌕 "
+      prompt_segment $CURRENT_BG default "🌱🌕👾 "
     fi
   fi
 }
@@ -148,5 +153,6 @@ prompt_dir() {
 
 
 source ~/.zprofile
-source ~/.profile
+source ~/dotfiles/zfunc
+# source ~/.profile
 export PATH="/usr/local/sbin:$PATH"

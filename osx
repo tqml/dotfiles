@@ -1,0 +1,60 @@
+#!/usr/bin/env sh
+
+#************************
+# System Setup
+#************************
+
+# -- Xcode
+echo "🔨 Install xcode-select"
+xcode-select --install
+
+
+#************************
+# Homebrew
+#************************
+
+# Install Homebrew
+echo "👾 Install Homebrew"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+
+# Update
+echo "👾 Update Homebrew"
+brew update
+
+# Install list
+xattr -cr ~/Library/QuickLook/QL*
+qlmanage -r
+qlmanage -r cache
+
+
+#************************
+# Override defaults
+#************************
+
+echo "🖥 Setup MacOS Settings"
+
+# -- Finder
+
+# Show all extensions
+defaults write -g AppleShowAllExtensions -bool true
+
+
+# -- Mail
+
+# Never view documents inline, only show icons
+defaults write com.apple.mail DisableInlineAttachmentViewing -bool yes
+
+
+# -- TextEdit
+
+# Disbale rich text
+defaults write com.apple.TextEdit RichText -int 0
+
+
+# -- Time Machine
+
+# Disable local time machine backups
+# sudo tmutil disablelocal
+
+# Stop Prompting to use new hard drives for time machine
+sudo defaults write /Library/Preferences/com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
