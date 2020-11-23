@@ -36,14 +36,19 @@ export LC_MESSAGES="en_US.UTF-8"
 
 
 #************************
-# OS-X: ZSH Key Bindigns
+# OS-X: ZSH Key Bindigns & Aliases
 #************************
 
 # Taken from: https://coderwall.com/p/a8uxma/zsh-iterm2-osx-shortcuts
 
 if [[ $(uname) = "Darwin" ]] then
+
+    # OS X Keybindings
     bindkey "[D" backward-word
     bindkey "[C" forward-word
     bindkey "^[a" beginning-of-line
     bindkey "^[e" end-of-line
+
+    # OS X Aliases
+    alias openInCode="open -b com.microsoft.VSCode"
 fi
