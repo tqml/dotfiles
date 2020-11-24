@@ -82,7 +82,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 plugins=(
 	git 
 	brew 
-	#	pyenv 
+	pyenv 
 	docker 
 	docker-compose 
 	web-search
