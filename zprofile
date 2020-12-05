@@ -1,10 +1,18 @@
+# ------------------
+# -- Path Settings
+# -----------------
+
+# Add Linux specific paths
+if [[ $(uname) == "Linux" ]] then
+    export PATH="$HOME/.local/bin:$PATH" 
+    export PATH="$HOME/.cargo/bin:$PATH"
+fi
 
 # ------------------
 # -- Editor Settings
 # ------------------
 
 export EDITOR=nano
-export PATH="$HOME/.cargo/bin:$PATH"
 
 # ------------------
 # -- Custom Aliases
