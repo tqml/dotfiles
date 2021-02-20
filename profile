@@ -1,5 +1,4 @@
 
-export PATH="$HOME/.cargo/bin:$PATH"
 
 # Define some useful aliases
 alias ll="ls -lah"
@@ -22,3 +21,4 @@ fi
 if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
+source "$HOME/.cargo/env"

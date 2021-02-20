@@ -5,8 +5,7 @@
 # Add Linux specific paths
 if [[ $(uname) == "Linux" ]] then
     export PATH="$HOME/.local/bin:$PATH" 
-    export PATH="$HOME/.cargo/bin:$PATH"
-fi
+    fi
 
 # ------------------
 # -- Editor Settings
@@ -23,7 +22,22 @@ alias ll="ls -lah"
 alias weather="curl wttr.in/vie"
 alias wsearch="web_search duckduckgo"
 
+# ------------------
+# -- Julia
+# ------------------
 
+# -- Set number of threads to use for julia
+export JULIA_NUM_THREADS=$(nproc)
+
+# Slow Julia / Script julia
+alias sjulia="julia -O0 --compile=min --startup=no"
+
+# ------------------
+# -- MATLAB
+# ------------------
+
+
+alias matlab="/Applications/MATLAB_R2019b.app/bin/matlab -nosplash -nodesktop"
 
 # ------------------
 # -- LANGUAGE
