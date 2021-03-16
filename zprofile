@@ -5,7 +5,7 @@
 # Add Linux specific paths
 if [[ $(uname) == "Linux" ]] then
     export PATH="$HOME/.local/bin:$PATH" 
-    fi
+fi
 
 # ------------------
 # -- Editor Settings
@@ -31,6 +31,15 @@ export JULIA_NUM_THREADS=$(nproc)
 
 # Slow Julia / Script julia
 alias sjulia="julia -O0 --compile=min --startup=no"
+
+
+# ------------------
+# -- Go
+# ------------------
+
+# Add go/bin to path
+test -d "$HOME/go/bin" && export PATH="$PATH:$HOME/go/bin"
+
 
 # ------------------
 # -- MATLAB

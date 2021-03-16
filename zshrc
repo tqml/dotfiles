@@ -169,7 +169,7 @@ test -e "/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" &
 # }
 
 
-source ~/.zprofile
+#source ~/.zprofile
 source ~/dotfiles/zfunc
 # source ~/.profile
 export PATH="/usr/local/sbin:$PATH"
