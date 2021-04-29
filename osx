@@ -1,4 +1,10 @@
-#!/usr/bin/env sh
+#!/bin/zsh
+# 
+#
+
+# Close any open System Preferences panes, to prevent them from overriding
+# settings we’re about to change
+osascript -e 'tell application "System Preferences" to quit'
 
 #************************
 # System Setup
@@ -13,18 +19,30 @@ xcode-select --install
 # Homebrew
 #************************
 
-# Install Homebrew
-echo "👾 Install Homebrew"
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 
-# Update
-echo "👾 Update Homebrew"
-brew update
+if which brew &> /dev/null
+then
+        # Install Homebrew
+        echo "👾 Install Homebrew"
+        #/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 
-# Install list
-xattr -cr ~/Library/QuickLook/QL*
-qlmanage -r
-qlmanage -r cache
+        # Update
+        echo "👾 Update Homebrew"
+        #brew update
+
+        echo "👾 Installing"
+        #brew install mosh diff-so-fancy \
+            qlcolorcode qlimagesize qlmarkdown qlstephen qlvideo
+        
+        #brew install --cask iterm2 keka alt-tab fork 
+
+        # dequarantine files in QuickLook folder
+        #xattr -cr ~/Library/QuickLook/QL*
+        #qlmanage -r
+        #qlmanage -r cache
+    
+fi
+
 
 
 #************************
@@ -58,3 +76,7 @@ defaults write com.apple.TextEdit RichText -int 0
 
 # Stop Prompting to use new hard drives for time machine
 sudo defaults write /Library/Preferences/com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
+
+
+
+echo "Done. Note that some of these changes require a logout/restart to take effect."
