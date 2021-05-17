@@ -7,3 +7,18 @@
 	pager = diff-so-fancy | less --tabs=4 -RFX
 [commit]
 	gpgsign = true
+
+[github]
+	user = tqml
+
+[credential]
+    helper = osxkeychain
+
+[url "https://bitbucket.org/"]
+    insteadOf = bb:
+
+[url "https://github.com/"]
+    insteadOf = gh:
+
+[url "https://gist.github.com/"]
+    insteadOf = gist:

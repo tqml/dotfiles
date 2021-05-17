@@ -18,9 +18,14 @@ export EDITOR=nano
 # ------------------
 
 alias ll="ls -lah"
+alias ls_dir="ls -d */"
+
+
 #alias tmux="TERM=screen-256color-bce tmux"
 alias weather="curl wttr.in/vie"
 alias wsearch="web_search duckduckgo"
+
+
 
 # ------------------
 # -- Julia

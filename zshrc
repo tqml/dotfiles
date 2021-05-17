@@ -1,3 +1,4 @@
+zmodload zsh/zprof
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -83,11 +84,15 @@ plugins=(
 	git 
 	brew 
 	pyenv 
+	golang
 	docker 
 	docker-compose 
 	web-search
 	zsh-autosuggestions
 	iterm2
+	mosh
+	ipfs
+	osx
 )
 
 # Add Brew Compleition
@@ -176,3 +181,8 @@ export PATH="/usr/local/sbin:$PATH"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+
+zstyle ':completion:*' accept-exact '*(N)'
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path ~/.zsh/cache
