@@ -50,8 +50,28 @@ test -d "$HOME/go/bin" && export PATH="$PATH:$HOME/go/bin"
 # -- MATLAB
 # ------------------
 
+# Make an alias for MATLAB
+if [[ $platform == 'Darwin' ]]; then
+    alias matlab="/Applications/MATLAB_R2019b.app/bin/matlab -nosplash -nodesktop"
+fi
 
-alias matlab="/Applications/MATLAB_R2019b.app/bin/matlab -nosplash -nodesktop"
+
+# ------------------
+# -- PYENV
+# ------------------
+
+# Add pyenv executable to PATH and
+# enable shims by adding the following
+# to ~/.profile and ~/.zprofile:
+
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init --path)"
+
+# Load pyenv into the shell by adding
+# the following to ~/.zshrc:
+
+eval "$(pyenv init -)"
 
 # ------------------
 # -- LANGUAGE
