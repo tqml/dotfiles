@@ -3650,7 +3650,7 @@
 	<key>Default Bookmark Guid</key>
 	<string>9DDD6F35-3F52-4523-9670-D2AD11F49C2D</string>
 	<key>EnableAPIServer</key>
-	<false/>
+	<string>1</string>
 	<key>HapticFeedbackForEsc</key>
 	<false/>
 	<key>HotkeyMigratedFromSingleToMulti</key>

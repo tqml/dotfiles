@@ -83,7 +83,8 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 plugins=(
 	git 
 	brew 
-	pyenv 
+	pyenv
+	pip
 	golang
 	docker 
 	docker-compose 
@@ -182,7 +183,12 @@ export PATH="/usr/local/sbin:$PATH"
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-
 zstyle ':completion:*' accept-exact '*(N)'
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path ~/.zsh/cache
+
+#### FIG ENV VARIABLES ####
+[ -s ~/.fig/fig.sh ] && source ~/.fig/fig.sh
+#### END FIG ENV VARIABLES ####
+
+

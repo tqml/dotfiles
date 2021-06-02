@@ -51,7 +51,7 @@ test -d "$HOME/go/bin" && export PATH="$PATH:$HOME/go/bin"
 # ------------------
 
 # Make an alias for MATLAB
-if [[ $platform == 'Darwin' ]]; then
+if [[ $(uname) == 'Darwin' ]]; then
     alias matlab="/Applications/MATLAB_R2019b.app/bin/matlab -nosplash -nodesktop"
 fi
 
