@@ -17,10 +17,12 @@ export ZSH="$HOME/.oh-my-zsh"
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 #ZSH_THEME="agnoster"
-#ZSH_THEME="robbyrussell"
-#ZSH_THEME="passion"
+ZSH_THEME="robbyrussell"
 #ZSH_THEME="powerlevel9k/powerlevel9k"
-ZSH_THEME="powerlevel10k/powerlevel10k"
+#ZSH_THEME="powerlevel10k/powerlevel10k"
+#ZSH_THEME="lambda"
+#ZSH_THEME="norm"
+#ZSH_THEME="apple"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -42,7 +44,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # DISABLE_UPDATE_PROMPT="true"
 
 # Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
+export UPDATE_ZSH_DAYS=30
 
 # Uncomment the following line if pasting URLs and other text is messed up.
 # DISABLE_MAGIC_FUNCTIONS=true
@@ -57,7 +59,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
+COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
@@ -81,20 +83,20 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
+	ansible
 	git 
 	brew 
 	pyenv
-	pip
-	golang
 	docker 
 	docker-compose 
-	web-search
+	history-substring-search
 	zsh-autosuggestions
+	zsh-completions
 	iterm2
-	mosh
-	ipfs
 	osx
 )
+
+autoload -U compinit && compinit
 
 # Add Brew Compleition
 if type brew &>/dev/null; then
@@ -146,7 +148,7 @@ test -e "/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" &
 
 # See here to learn how to only show your username instead.
 # prompt_context() {
-  # prompt_segment $CURRENT_BG default  "λ "
+#   prompt_segment $CURRENT_BG default  "λ "
 # }
 
 # To Optionally to hide the “user@hostname” info when you’re logged in as yourself on your local machine, add prompt_context(){} at the bottom of your ~/.zshrc. 
@@ -173,12 +175,14 @@ test -e "/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" &
 #   # Limits the viisble path dir levels to 3
 #   prompt_segment blue black "%(5~|%-1~/…/%3~|%4~)"
 # }
-
+export CLICOLOR=1
+export CLICOLOR_FORCE=1
+#export PS1=$'\n'"%F{green}𝞴 %*%F %3~ %F{white}"$'\n'"$ "
+export PATH="/usr/local/sbin:$PATH"
 
 #source ~/.zprofile
 source ~/dotfiles/zfunc
-# source ~/.profile
-export PATH="/usr/local/sbin:$PATH"
+
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -186,9 +190,4 @@ export PATH="/usr/local/sbin:$PATH"
 zstyle ':completion:*' accept-exact '*(N)'
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path ~/.zsh/cache
-
-#### FIG ENV VARIABLES ####
-[ -s ~/.fig/fig.sh ] && source ~/.fig/fig.sh
-#### END FIG ENV VARIABLES ####
-
 

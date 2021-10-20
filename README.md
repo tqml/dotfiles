@@ -2,6 +2,8 @@
 
 A backup of my dotfiles. Based on [michaeljsmalley/dotfiles](https://github.com/michaeljsmalley/dotfiles).
 
+![Preview](img/screenshot.png)
+
 ## Usage
 
 Clone the repository to `~/dotfiles` then run the `makesymlinks.sh` script. This will then:
@@ -16,7 +18,7 @@ Clone the repository to `~/dotfiles` then run the `makesymlinks.sh` script. This
 - [ZSH Autosuggestions](https://github.com/zsh-users/zsh-autosuggestions)
 - [Powerlevel10k](https://github.com/romkatv/powerlevel10k.git)
 - [Tmux plug-in manager](https://github.com/tmux-plugins/tpm)
-
+- [Tmux](https://github.com/gpakosz/.tmux)
 ## Credit
 
 Credit for the `makesymlinks` script goes to [michaeljsmalley](https://github.com/michaeljsmalley/dotfiles).

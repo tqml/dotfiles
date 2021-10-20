@@ -25,15 +25,15 @@ echo "done"
 
 # change to the dotfiles directory
 echo -n "Changing to the $dir directory ..."
-cd $dir
+cd $dir || exit
 echo "done"
 
 # move any existing dotfiles in homedir to dotfiles_old directory, then create symlinks from the homedir to any files in the ~/dotfiles directory specified in $files
 for file in $files; do
     echo "Moving any existing dotfiles from ~ to $olddir"
-    mv ~/.$file ~/dotfiles_old/
+    mv ~/."$file" ~/dotfiles_old/
     echo "Creating symlink to $file in home directory."
-    ln -s $dir/$file ~/.$file
+    ln -s "$dir/$file" "$HOME/.$file"
 done
 
 install_zsh () {
@@ -44,8 +44,8 @@ if [ -f /bin/zsh -o -f /usr/bin/zsh ]; then
         git clone http://github.com/robbyrussell/oh-my-zsh.git
     fi
     # Set the default shell to zsh if it isn't currently set to zsh
-    if [[ ! $(echo $SHELL) == $(which zsh) ]]; then
-        chsh -s $(which zsh)
+    if [[ ! $SHELL == $(which zsh) ]]; then
+        chsh -s "$(which zsh)"
     fi
 else
     # If zsh isn't installed, get the platform of the current machine
@@ -69,7 +69,6 @@ fi
 }
 
 install_zsh
-
 
 
 # Install Autosuggestions

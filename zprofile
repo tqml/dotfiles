@@ -25,7 +25,13 @@ alias ls_dir="ls -d */"
 alias weather="curl wttr.in/vie"
 alias wsearch="web_search duckduckgo"
 
+function wetta()
+{
+    echo "-- Fetching: wttr.in/$1"
 
+    # Get the weather for the current location
+    curl "wttr.in/$1"
+}
 
 # ------------------
 # -- Julia
@@ -37,6 +43,14 @@ export JULIA_NUM_THREADS=$(nproc)
 # Slow Julia / Script julia
 alias sjulia="julia -O0 --compile=min --startup=no"
 
+
+
+# ------------------
+# -- Docker
+# ------------------
+
+#alias docker=podman
+alias docktop="docker attach ctop > /dev/null || docker run --rm -ti --name=ctop --volume /var/run/docker.sock:/var/run/docker.sock:ro quay.io/vektorlab/ctop:latest"
 
 # ------------------
 # -- Go
@@ -66,12 +80,10 @@ fi
 
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init --path)"
 
-# Load pyenv into the shell by adding
-# the following to ~/.zshrc:
-
-eval "$(pyenv init -)"
+if [[ -d "$PYENV_ROOT" ]]; then
+    eval "$(pyenv init --path)"
+fi
 
 # ------------------
 # -- LANGUAGE
