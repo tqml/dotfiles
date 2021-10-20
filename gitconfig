@@ -22,3 +22,5 @@
 
 [url "https://gist.github.com/"]
     insteadOf = gist:
+[init]
+	defaultBranch = main
