@@ -1,17 +1,18 @@
+#!/bin/zsh
+
 # ------------------
 # -- ZSH - Functions
 # ------------------
 
+# function git_update(){
+#   git checkout master && git pull && git checkout - && git rebase master
+# }
 
-function git_update(){
-  git checkout master && git pull && git checkout - && git rebase master
-}
+# function get_ip()
+# {
+#     iname=$1    # the interface name
+#     # export IP=$(ifconfig $iname | grep inet | awk '$1=="inet" {print $2}')
+#     echo "$(ifconfig $iname | grep inet | awk '$1=="inet" {print $2}')"
+# }
 
-function get_ip()
-{
-    iname=$1    # the interface name
-    # export IP=$(ifconfig $iname | grep inet | awk '$1=="inet" {print $2}')
-    echo $(ifconfig $iname | grep inet | awk '$1=="inet" {print $2}')
-}
-
-fpath=( ~/dotfiles/zfunc "${fpath[@]}" )
+# fpath=( ~/dotfiles/zfunc "${fpath[@]}" )

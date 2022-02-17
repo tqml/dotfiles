@@ -1,10 +1,15 @@
-zmodload zsh/zprof
+#zmodload zsh/zprof
+
+zstyle ':completion:*' accept-exact '*(N)'
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path ~/.zsh/cache
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
+# if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+#   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+# fi
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
@@ -17,11 +22,11 @@ export ZSH="$HOME/.oh-my-zsh"
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 #ZSH_THEME="agnoster"
-ZSH_THEME="robbyrussell"
+#ZSH_THEME="robbyrussell"
 #ZSH_THEME="powerlevel9k/powerlevel9k"
 #ZSH_THEME="powerlevel10k/powerlevel10k"
 #ZSH_THEME="lambda"
-#ZSH_THEME="norm"
+ZSH_THEME="norm"
 #ZSH_THEME="apple"
 
 # Set list of themes to pick from when loading at random
@@ -59,7 +64,7 @@ export UPDATE_ZSH_DAYS=30
 # ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
-COMPLETION_WAITING_DOTS="true"
+# COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
@@ -83,28 +88,27 @@ COMPLETION_WAITING_DOTS="true"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-	ansible
-	git 
-	brew 
-	pyenv
-	docker 
-	docker-compose 
-	history-substring-search
-	zsh-autosuggestions
-	zsh-completions
-	iterm2
-	osx
+	# evalcache
+	# ansible
+	# git
+	# brew
+	# pyenv
+	docker
+	terraform
+	# docker-compose
+	# history-substring-search
+	# zsh-autosuggestions
+	# zsh-completions
 )
 
-autoload -U compinit && compinit
+#autoload -U compinit && compinit
 
-# Add Brew Compleition
-if type brew &>/dev/null; then
-  FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
-
-  autoload -Uz compinit
-  compinit
-fi
+# # Add Brew Compleition
+# if type brew &>/dev/null; then
+#   FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
+#   autoload -Uz compinit
+#   compinit
+# fi
 
 source $ZSH/oh-my-zsh.sh
 
@@ -112,7 +116,7 @@ source $ZSH/oh-my-zsh.sh
 
 # Declere GPG2 as GPG as they have almost the same CLI arguments
 # Found here: https://unix.stackexchange.com/questions/188945/zsh-gpg2-autocompletion
-compdef gpg2=gpg
+# compdef gpg2=gpg
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
@@ -138,20 +142,18 @@ compdef gpg2=gpg
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-
 # Check if iTerm is installed and run the integration
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+# test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 # Add zsh Syntax Highlighting
 test -e "/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" && source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
 
 # See here to learn how to only show your username instead.
 # prompt_context() {
 #   prompt_segment $CURRENT_BG default  "λ "
 # }
 
-# To Optionally to hide the “user@hostname” info when you’re logged in as yourself on your local machine, add prompt_context(){} at the bottom of your ~/.zshrc. 
+# To Optionally to hide the “user@hostname” info when you’re logged in as yourself on your local machine, add prompt_context(){} at the bottom of your ~/.zshrc.
 # prompt_context() {
 #   if [[ -n "$SSH_CLIENT" ]]; then
 #     # Additional condition would be "$USER" != "$DEFAULT_USER", but it doesnt work well, because default user is not set
@@ -168,26 +170,28 @@ test -e "/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" &
 #   fi
 # }
 
-
 # Taken from: https://github.com/agnoster/agnoster-zsh-theme/issues/19
 # prompt_dir() {
 #   # prompt_segment blue black '%~'
 #   # Limits the viisble path dir levels to 3
 #   prompt_segment blue black "%(5~|%-1~/…/%3~|%4~)"
 # }
-export CLICOLOR=1
-export CLICOLOR_FORCE=1
+#export CLICOLOR=1
+#export CLICOLOR_FORCE=1
 #export PS1=$'\n'"%F{green}𝞴 %*%F %3~ %F{white}"$'\n'"$ "
 export PATH="/usr/local/sbin:$PATH"
 
-#source ~/.zprofile
-source ~/dotfiles/zfunc
-
+# source ~/.zprofile
+# source ~/dotfiles/zfunc
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+# [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-zstyle ':completion:*' accept-exact '*(N)'
-zstyle ':completion:*' use-cache on
-zstyle ':completion:*' cache-path ~/.zsh/cache
+eval "$(starship init zsh)"
 
+#zprof
+
+# >>>> Vagrant command completion (start)
+fpath=(/opt/vagrant/embedded/gems/2.2.19/gems/vagrant-2.2.19/contrib/zsh $fpath)
+compinit
+# <<<<  Vagrant command completion (end)

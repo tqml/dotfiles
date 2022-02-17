@@ -1,6 +1,10 @@
-#!/bin/zsh
+#!/bin/bash
 # 
 #
+
+# Sources:
+# - https://joshspicer.com/macos-tweaks
+
 
 # Close any open System Preferences panes, to prevent them from overriding
 # settings we’re about to change
@@ -31,14 +35,14 @@ then
         #brew update
 
         echo "👾 Installing"
-        #brew install mosh diff-so-fancy \
+        brew install mosh diff-so-fancy \
             qlcolorcode qlimagesize qlmarkdown qlstephen qlvideo
         
-        #brew install --cask iterm2 keka alt-tab fork 
+        brew install --cask iterm2 keka alt-tab fork 
 
         # dequarantine files in QuickLook folder
-        #xattr -cr ~/Library/QuickLook/QL*
-        #qlmanage -r
+        sudo xattr -cr ~/Library/QuickLook/QL*
+        qlmanage -r
         #qlmanage -r cache
     
 fi

@@ -3,15 +3,23 @@
 # -----------------
 
 # Add Linux specific paths
-if [[ $(uname) == "Linux" ]] then
-    export PATH="$HOME/.local/bin:$PATH" 
+if [[ $(uname) == "Linux" ]]; then
+    export PATH="$HOME/.local/bin:$PATH"
 fi
 
 # ------------------
 # -- Editor Settings
 # ------------------
 
-export EDITOR=nano
+# Select the first editor that is found in path.
+EDITOR_CHOICES=(
+    "micro"
+    "nano"
+    "vim"
+    "vi"
+    "emacs"
+)
+export EDITOR="$(command -v $EDITOR_CHOICES | head -1)"
 
 # ------------------
 # -- Custom Aliases
@@ -20,13 +28,11 @@ export EDITOR=nano
 alias ll="ls -lah"
 alias ls_dir="ls -d */"
 
-
 #alias tmux="TERM=screen-256color-bce tmux"
 alias weather="curl wttr.in/vie"
 alias wsearch="web_search duckduckgo"
 
-function wetta()
-{
+function wetta() {
     echo "-- Fetching: wttr.in/$1"
 
     # Get the weather for the current location
@@ -38,12 +44,11 @@ function wetta()
 # ------------------
 
 # -- Set number of threads to use for julia
-export JULIA_NUM_THREADS=$(nproc)
+#export JULIA_NUM_THREADS=$(nproc)
+export JULIA_NUM_THREADS=6
 
 # Slow Julia / Script julia
 alias sjulia="julia -O0 --compile=min --startup=no"
-
-
 
 # ------------------
 # -- Docker
@@ -59,16 +64,14 @@ alias docktop="docker attach ctop > /dev/null || docker run --rm -ti --name=ctop
 # Add go/bin to path
 test -d "$HOME/go/bin" && export PATH="$PATH:$HOME/go/bin"
 
-
 # ------------------
 # -- MATLAB
 # ------------------
 
 # Make an alias for MATLAB
 if [[ $(uname) == 'Darwin' ]]; then
-    alias matlab="/Applications/MATLAB_R2019b.app/bin/matlab -nosplash -nodesktop"
+    alias matlab="/Applications/MATLAB_R2021b.app/bin/matlab -nosplash -nodesktop"
 fi
-
 
 # ------------------
 # -- PYENV
@@ -101,15 +104,13 @@ export LC_NUMERIC="en_US.UTF-8"
 export LC_MONETARY="en_US.UTF-8"
 export LC_MESSAGES="en_US.UTF-8"
 
-
-
 #************************
 # OS-X: ZSH Key Bindigns & Aliases
 #************************
 
 # Taken from: https://coderwall.com/p/a8uxma/zsh-iterm2-osx-shortcuts
 
-if [[ $(uname) = "Darwin" ]] then
+if [[ $(uname) = "Darwin" ]]; then
 
     # OS X Keybindings
     bindkey "[D" backward-word

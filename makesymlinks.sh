@@ -8,6 +8,7 @@
 
 dir=~/dotfiles                    # dotfiles directory
 olddir=~/dotfiles_old             # old dotfiles backup directory
+current_workdir=$(pwd)            # the directory we're currently in
 
 #----------------------
 #!!!!! IMPORTANT !!!!!
@@ -15,6 +16,9 @@ olddir=~/dotfiles_old             # old dotfiles backup directory
 # Specify your files here
 # list of files/folders to symlink in homedir
 files="alacritty.yml bash_profile iterm-config gitconfig gitignore profile tmux.conf zfunc zprofile zshrc oh-my-zsh"    
+
+
+
 
 ##########
 
@@ -76,4 +80,4 @@ git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/p
 
 # Install Powerlevel10k Theme
 #git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
-git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+git clone --depth=1 "https://github.com/romkatv/powerlevel10k.git" "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k"
