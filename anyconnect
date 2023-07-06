@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <AnyConnectPreferences>
-    <DefaultUser>e1425900@student.tuwien.ac.at</DefaultUser>
-    <DefaultSecondUser></DefaultSecondUser>
-    <ClientCertificateThumbprint></ClientCertificateThumbprint>
-    <MultipleClientCertificateThumbprints></MultipleClientCertificateThumbprints>
-    <ServerCertificateThumbprint></ServerCertificateThumbprint>
-    <DefaultHostName>vpn.tuwien.ac.at</DefaultHostName>
-    <DefaultHostAddress></DefaultHostAddress>
-    <DefaultGroup>2_Alles_getunnelt</DefaultGroup>
-    <ProxyHost></ProxyHost>
-    <ProxyPort></ProxyPort>
-    <SDITokenType>none</SDITokenType>
-    <ControllablePreferences></ControllablePreferences>
+<DefaultUser>e1425900@student.tuwien.ac.at</DefaultUser>
+<DefaultSecondUser></DefaultSecondUser>
+<ClientCertificateThumbprint></ClientCertificateThumbprint>
+<MultipleClientCertificateThumbprints></MultipleClientCertificateThumbprints>
+<ServerCertificateThumbprint></ServerCertificateThumbprint>
+<DefaultHostName>vpn.tuwien.ac.at</DefaultHostName>
+<DefaultHostAddress></DefaultHostAddress>
+<DefaultGroup>2_Alles_getunnelt</DefaultGroup>
+<ProxyHost></ProxyHost>
+<ProxyPort></ProxyPort>
+<SDITokenType>none</SDITokenType>
+<ControllablePreferences>
+<LocalLanAccess>true</LocalLanAccess>
+<DisableCaptivePortalDetection>false</DisableCaptivePortalDetection></ControllablePreferences>
 </AnyConnectPreferences>

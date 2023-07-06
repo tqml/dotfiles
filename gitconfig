@@ -1,26 +1,33 @@
 [user]
-	name = Benjamin K
-	email = benjamin.kulnik@student.tuwien.ac.at
-	signingkey = 3D83A84DEF4388AB
+name = Benjamin K
+email = benjamin.kulnik@student.tuwien.ac.at
+signingkey = 3D83A84DEF4388AB
 [core]
-	excludesfile = ~/.gitignore
-	pager = diff-so-fancy | less --tabs=4 -RFX
+excludesfile = ~/.gitignore
+pager = diff-so-fancy | less --tabs=4 -RFX
+
 [commit]
-	gpgsign = true
+gpgsign = true
 
 [github]
-	user = tqml
+user = tqml
 
 [credential]
-    helper = osxkeychain
+helper = osxkeychain
 
 [url "https://bitbucket.org/"]
-    insteadOf = bb:
+insteadOf = bb:
 
 [url "https://github.com/"]
-    insteadOf = gh:
+insteadOf = gh:
 
 [url "https://gist.github.com/"]
-    insteadOf = gist:
+insteadOf = gist:
 [init]
-	defaultBranch = main
+defaultBranch = main
+
+[filter "lfs"]
+smudge = git-lfs smudge -- %f
+process = git-lfs filter-process
+required = true
+clean = git-lfs clean -- %f
