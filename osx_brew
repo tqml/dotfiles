@@ -2,3 +2,6 @@ mas
 jq
 mitmproxy
 starship
+direnv
+zoxide
+mcfly

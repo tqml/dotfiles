@@ -6,20 +6,23 @@ export PATH="/usr/local/sbin:$PATH"
 # -- Oh-My-Zsh
 # ------------------
 export ZSH="$HOME/.oh-my-zsh" # Path to your oh-my-zsh installation.
-plugins=(git brew pyenv docker)
+plugins=(git brew docker)
 ZSH_THEME=""
 source $ZSH/oh-my-zsh.sh
 
 # Others
-source "$HOME/.cargo/env"
+#source "$HOME/.cargo/env"
 eval "$(starship init zsh)"
 eval "$(direnv hook zsh)"
+eval "$(zoxide init zsh)"
+eval "$(mcfly init zsh)"
+
 
 # ------------------
 # -- Homebrew
 # ------------------
 
-export HOMEBREW_CLEANUP_MAX_AGE_DAYS=30
+export HOMEBREW_CLEANUP_MAX_AGE_DAYS=7
 
 # ------------------
 # -- Julia
@@ -44,9 +47,8 @@ test -d "$HOME/go/bin" && export PATH="$PATH:$HOME/go/bin"
 # -- Custom Aliases
 # ------------------
 
-#alias ll="ls -lah"
-alias ll="exa -lh"
-alias ls_dir="ls -d */"
+alias ll="ls -lh"
+alias lsd="ls -d */"
 
 #alias tmux="TERM=screen-256color-bce tmux"
 alias weather="curl wttr.in/vienna"
@@ -120,3 +122,12 @@ if [[ $(uname) = "Darwin" ]]; then
 fi
 
 #zprof
+
+# >>> juliaup initialize >>>
+
+# !! Contents within this block are managed by juliaup !!
+
+path=('/Users/benjaminkulnik/.juliaup/bin' $path)
+export PATH
+
+# <<< juliaup initialize <<<
