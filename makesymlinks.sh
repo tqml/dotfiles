@@ -5,18 +5,21 @@
 # This script creates symlinks from the home directory to any desired dotfiles in ~/dotfiles
 ############################
 
+
 ########## Variables
 
-dir=~/dotfiles         # dotfiles directory
-olddir=~/dotfiles_old  # old dotfiles backup directory
-current_workdir=$(pwd) # the directory we're currently in
+dir="$(pwd)"                # dotfiles directory
+olddir="$HOME/dotfiles_old" # old dotfiles backup directory
+current_workdir="$(pwd)"    # the directory we're currently in
 
 #----------------------
 #!!!!! IMPORTANT !!!!!
 #----------------------
 # Specify your files here
 # list of files/folders to symlink in homedir
-files="alacritty.yml bash_profile iterm-config gitconfig gitignore profile tmux.conf terrafromrc zfunc zprofile zshrc oh-my-zsh"
+files="bash_profile iterm-config gitconfig gitignore profile tmux.conf terraformrc zfunc zprofile zshrc oh-my-zsh"
+
+folders_to_create=".config"
 
 ##########
 
@@ -30,10 +33,21 @@ echo -n "Changing to the $dir directory ..."
 cd $dir || exit
 echo "done"
 
+for folder in $folders_to_create; do
+    echo "Create folder '$folder' if not exist"
+    mkdir -p "$HOME/$folder"
+done
+
 # move any existing dotfiles in homedir to dotfiles_old directory, then create symlinks from the homedir to any files in the ~/dotfiles directory specified in $files
 for file in $files; do
-    echo "Moving any existing dotfiles from ~ to $olddir"
-    mv ~/."$file" ~/dotfiles_old/
+
+    # check if file already exists
+
+    if test -f "$HOME/.$file"; then
+        echo "Moving any existing dotfiles from ~ to $olddir"
+        mv "$HOME/.$file" "$olddir"
+    fi
+
     echo "Creating symlink to $file in home directory."
     ln -s "$dir/$file" "$HOME/.$file"
 done
@@ -73,5 +87,5 @@ install_zsh() {
 install_zsh
 
 # Install Autosuggestions
-git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+#git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
 
