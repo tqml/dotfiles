@@ -33,7 +33,6 @@ export HOMEBREW_CLEANUP_MAX_AGE_DAYS=7
 
 # -- Set number of threads to use for julia
 #export JULIA_NUM_THREADS=$(nproc)
-export JULIA_NUM_THREADS=6
 
 # Slow Julia / Script julia
 alias sjulia="julia -O0 --compile=min --startup=no"
