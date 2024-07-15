@@ -1,7 +1,7 @@
 # --- Editor and IDE files
 
 .vscode # vscode
-.idea # intelli-j
+.idea   # intelli-j
 
 # --- Web releated
 
@@ -80,3 +80,18 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/linux,macos,windows
+
+### TERRAFORM
+terraform.tfstate
+terraform.tfstate.backup
+.dccache
+.terraform/
+.infracost/
+
+# General
+.env
+.envrc
+
+# Python
+.python-version
+.pyc
