@@ -1,0 +1,14 @@
+set mouse
+
+# Use smooth scrolling (single line)
+# Mac os reports an arror?
+# set smooth
+
+# Tab size is equal to *this* many spaces
+set tabsize 4
+
+# Convert typed tabs to spaces
+set tabstospaces
+
+include "/opt/homebrew/share/nano/*.nanorc"
+
