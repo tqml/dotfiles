@@ -25,17 +25,6 @@ export EDITOR="$_EDITOR"
 
 
 # ------------------
-# -- Custom Aliases
-# ------------------
-
-alias ll="ls -lah"
-alias ls_dir="ls -d */"
-alias tg=terragrunt
-alias tf=terraform
-alias weather="curl wttr.in/vie"
-alias wsearch="web_search duckduckgo"
-
-# ------------------
 # -- LANG
 # ------------------
 
