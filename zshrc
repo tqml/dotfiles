@@ -118,8 +118,9 @@ fi
 # -- Terraform
 # ------------------
 
-alias tf=terraform
+alias tf=tofu
 alias tg=terragrunt
+alias tgps=tg plan -no-color | grep -E '^[[:punct:]]|Plan'
 
 # ------------------
 # -- LANGUAGE
@@ -172,9 +173,6 @@ case ":$PATH:" in
 esac
 # pnpm end
 
-
-
-alias tgps=tg plan -no-color | grep -E '^[[:punct:]]|Plan'
 
 
 # >>> juliaup initialize >>>
