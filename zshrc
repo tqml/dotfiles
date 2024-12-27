@@ -78,9 +78,15 @@ alias sysjulia="julia -O0 --compile=min --startup=no --project=@. --sysimage=Jul
 # ------------------
 # -- Go
 # ------------------
-
 # Add go/bin to path
 test -d "$HOME/go/bin" && export PATH="$PATH:$HOME/go/bin"
+
+# ------------------
+# -- RUST
+# ------------------
+# Add cargo/bin to path
+test -d "$HOME/.cargo/bin" && export PATH="$PATH:$HOME/.cargo/bin"
+
 
 # ------------------
 # -- MATLAB
