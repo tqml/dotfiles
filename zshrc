@@ -34,15 +34,23 @@ eval "$(direnv hook zsh)"
 ZSH_SYNTAX_HIGHLIGHTING_PLUGIN_PATH="/opt/homebrew/opt/zsh-fast-syntax-highlighting/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
 test -e $ZSH_SYNTAX_HIGHLIGHTING_PLUGIN_PATH && source $ZSH_SYNTAX_HIGHLIGHTING_PLUGIN_PATH
 
+
+
 # set an easier to get alias for zoxide on german keyboards
 alias c=z
 alias c="z"
-# Eza
-alias ls="eza --icons --git"
-alias l="eza -l --icons --git -a"
-alias ll="eza -l --icons --git -a"
-alias lt="eza --tree --level=2 --long --icons --git"
-alias ltree="eza --tree --level=2  --icons --git"
+
+
+# Check if EZA is installed
+if command -v eza &> /dev/null; then
+    alias ls="eza --icons --git"
+    alias l="eza -l --icons --git -a"
+    alias ll="eza -l --icons --git -a"
+    alias lt="eza --tree --level=2 --long --icons --git"
+    alias ltree="eza --tree --level=2  --icons --git"
+else
+    echo "EZA is not installed. Please install it using 'cargo install eza'"
+fi
 alias la="tree -L 2"
 
 
