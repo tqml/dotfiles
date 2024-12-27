@@ -3,11 +3,13 @@ ansible
 asciinema
 awscli
 bash
+bat
 cdktf
 cmatrix
 curl
 diceware
 dog
+eza
 ffmpeg
 gh
 glow
@@ -47,4 +49,4 @@ tmux
 trash
 tree
 yt-dlp
-
+zoxide
