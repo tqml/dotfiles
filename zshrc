@@ -74,6 +74,7 @@ export HOMEBREW_CLEANUP_MAX_AGE_DAYS=7
 # Slow Julia / Script julia
 alias sjulia="julia -O0 --compile=min --startup=no"
 alias sysjulia="julia -O0 --compile=min --startup=no --project=@. --sysimage=JuliaSysimage.dylib --sysimage-native-code=yes"
+export JULIA_EDITOR="code"
 
 # ------------------
 # -- Go
