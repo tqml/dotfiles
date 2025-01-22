@@ -1,6 +1,11 @@
 setopt prompt_subst
-autoload bashcompinit && bashcompinit
+#autoload bashcompinit && bashcompinit
 
+HISTSIZE=50000
+SAVEHIST=50000
+setopt HIST_REDUCE_BLANKS  # remove unnecessary blanks
+setopt EXTENDED_HISTORY  # record command start time
+setopt appendhistory
 export HISTORY_IGNORE="(l|l *|ls|ls *|cd|cd ..*|cd -|z *|pwd|exit)"
 
 # --------------------------------------------------------
@@ -136,6 +141,17 @@ fi
 alias tf=tofu
 alias tg=terragrunt
 alias tgps=tg plan -no-color | grep -E '^[[:punct:]]|Plan'
+
+# ------------------
+# -- Nix
+# ------------------
+
+# Nix
+if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+  . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+fi
+# End Nix
+
 
 # ------------------
 # -- LANGUAGE
