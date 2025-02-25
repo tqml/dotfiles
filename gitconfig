@@ -1,33 +1,64 @@
 [user]
-name = Benjamin K
-email = benjamin.kulnik@student.tuwien.ac.at
-signingkey = 3D83A84DEF4388AB
+	name = Benjamin K
+	email = benjamin.kulnik@student.tuwien.ac.at
+#signingkey = 3D83A84DEF4388AB
+
 [core]
-excludesfile = ~/.gitignore
-pager = diff-so-fancy | less --tabs=4 -RFX
+	excludesfile = ~/.gitignore
 
 [commit]
-gpgsign = true
+	verbose = true
+	#gpgsign = true
 
-[github]
-user = tqml
+[help]
+	autocorrect = prompt
 
-[credential]
-helper = osxkeychain
+[rebase]
+	autoSquash = true
+	autoStash = true
+	updateRefs = true
 
-[url "https://bitbucket.org/"]
-insteadOf = bb:
+[column]
+	ui = auto
 
-[url "https://github.com/"]
-insteadOf = gh:
+[fetch]
+	prune = true
+	pruneTags = true
+	all = true
 
-[url "https://gist.github.com/"]
-insteadOf = gist:
+[branch]
+	sort = -committerdate
+
+[tag]
+    sort = version:refname
+
 [init]
-defaultBranch = main
+	defaultBranch = main
+
+[diff]
+	algorithm = histogram
+	colorMoved = plain
+	mnemonicPrefix = true
+	renames = true
 
 [filter "lfs"]
-smudge = git-lfs smudge -- %f
-process = git-lfs filter-process
-required = true
-clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+
+
+[github]
+	user = tqml
+
+[credential]
+	helper = osxkeychain
+
+[url "https://bitbucket.org/"]
+	insteadOf = bb:
+
+[url "https://github.com/"]
+	insteadOf = gh:
+
+[url "https://gist.github.com/"]
+	insteadOf = gist:
