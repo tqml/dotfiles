@@ -1,9 +1,11 @@
 oh-my-zsh/
 
+# Git Configurations that are local to the machine
+gitconfig-local
+#gitconfig-private
 
 # Ignore local files
 *.local
-
 
 # Python
 # Byte-compiled / optimized / DLL files
