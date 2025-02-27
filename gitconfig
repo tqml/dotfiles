@@ -1,14 +1,12 @@
 [user]
 	name = Benjamin K
 	email = benjamin.kulnik@student.tuwien.ac.at
-#signingkey = 3D83A84DEF4388AB
 
 [core]
 	excludesfile = ~/.gitignore
 
 [commit]
 	verbose = true
-	#gpgsign = true
 
 [help]
 	autocorrect = prompt
@@ -47,7 +45,6 @@
 	required = true
 	clean = git-lfs clean -- %f
 
-
 [github]
 	user = tqml
 
@@ -62,3 +59,17 @@
 
 [url "https://gist.github.com/"]
 	insteadOf = gist:
+
+
+# %% --- Alternative git configuration ------------------------------------------ #
+# https://www.borfast.com/blog/2021/02/27/how-to-override-and-share-git-configuration-options-between-multiple-directories/
+
+[include]
+	path = "~/dotfiles/gitconfig.local"
+
+[includeIf "gitdir:~/dotfiles/"]
+	path = "~/dotfiles/gitconfig-private"
+
+[includeIf "gitdir:~/Developer/Private/"]
+	path = "~/dotfiles/gitconfig-private"
+

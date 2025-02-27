@@ -1,0 +1,6 @@
+[user]
+	name = Benjamin K
+	email = benjamin.kulnik@student.tuwien.ac.at
+
+[credential]
+	helper = osxkeychain
