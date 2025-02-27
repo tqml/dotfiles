@@ -1,7 +1,4 @@
 alt-tab
-anaconda
-anki
-aws-vault
 font-fira-mono
 font-fira-mono-nerd-font
 font-fira-sans
@@ -9,19 +6,11 @@ font-jetbrains-mono
 font-jetbrains-mono-nerd-font
 font-juliamono
 fork
-iina
-keepingyouawake
 keka
-netnewswire
 obs
 orion
-pycharm-ce
 qlmarkdown
-rectangle
 skim
-spotify
 textmate
 utm
-vagrant
-wireshark
 zotero
