@@ -73,3 +73,5 @@
 [includeIf "gitdir:~/Developer/Private/"]
 	path = "~/dotfiles/gitconfig-private"
 
+[includeIf "gitdir:~/Developer/OpenSourceProjects/"]
+	path = "~/dotfiles/gitconfig-private"

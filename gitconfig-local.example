@@ -1,0 +1,6 @@
+[user]
+	name = Benjamin Kulnik
+	email = benjamin.kulnik@friva.at
+
+[credential]
+	helper = osxkeychain
