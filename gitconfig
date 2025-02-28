@@ -65,7 +65,7 @@
 # https://www.borfast.com/blog/2021/02/27/how-to-override-and-share-git-configuration-options-between-multiple-directories/
 
 [include]
-	path = "~/dotfiles/gitconfig.local"
+	path = "~/dotfiles/gitconfig-local"
 
 [includeIf "gitdir:~/dotfiles/"]
 	path = "~/dotfiles/gitconfig-private"
