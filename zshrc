@@ -78,6 +78,16 @@ alias wsearch="web_search duckduckgo"
 export HOMEBREW_CLEANUP_MAX_AGE_DAYS=7
 
 # ------------------
+# -- GPG
+# ------------------
+
+# https://cloudlumberjack.com/posts/github-signed-commits-macos/
+# brew install gnupg pinentry-mac
+export GPG_TTY=$(tty)
+gpgconf --launch gpg-agent
+
+
+# ------------------
 # -- Julia
 # ------------------
 
