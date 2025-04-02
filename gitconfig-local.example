@@ -1,6 +1,11 @@
 [user]
-	name = Benjamin Kulnik
-	email = benjamin.kulnik@friva.at
+	signingkey = EB80AF12
+
+[commit]
+	gpgsign = true
+
+[tag]
+	gpgsign = true
 
 [credential]
 	helper = osxkeychain
