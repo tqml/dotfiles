@@ -5,6 +5,7 @@
 # This script creates symlinks from the home directory to any desired dotfiles in ~/dotfiles
 ############################
 
+set -euo pipefail # Exit on error, undefined variable, or failed pipe
 
 ########## Variables
 
@@ -19,7 +20,7 @@ current_workdir="$(pwd)"    # the directory we're currently in
 # list of files/folders to symlink in homedir
 files="bash_profile iterm-config gitconfig gitignore profile tmux.conf terraformrc zfunc zprofile zshrc oh-my-zsh"
 
-folders_to_create=".config"
+folders_to_create=".config .config/ghostty"
 
 ##########
 
@@ -84,7 +85,7 @@ install_zsh() {
     fi
 }
 
-install_zsh
+#install_zsh
 
 # Install Autosuggestions
 #git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions

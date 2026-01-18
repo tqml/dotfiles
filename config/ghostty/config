@@ -1,2 +1,5 @@
 theme = carbonfox
 font-family = Berkeley Mono
+macos-icon = official
+#theme = vercel
+shell-integration = zsh
