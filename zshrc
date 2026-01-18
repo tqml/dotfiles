@@ -18,10 +18,10 @@ export PATH="/usr/local/sbin:/opt/homebrew/bin:$PATH"
 # ------------------
 # -- Oh-My-Zsh
 # ------------------
-export ZSH="$HOME/.oh-my-zsh" # Path to your oh-my-zsh installation.
-plugins=(git brew docker)
+#export ZSH="$HOME/.oh-my-zsh" # Path to your oh-my-zsh installation.
+#plugins=(git brew docker)
 # ZSH_THEME=""
-source "$ZSH/oh-my-zsh.sh"
+#source "$ZSH/oh-my-zsh.sh"
 
 # Others
 #source "$HOME/.cargo/env"
@@ -58,11 +58,14 @@ else
 fi
 alias la="tree -L 2"
 
-
-alias cat="bat"
-alias less="bat"
-alias more="bat"
-
+# Check if BAT is installed
+if ! command -v bat &> /dev/null; then
+    echo "BAT is not installed. Please install it using 'brew install bat'"
+else
+    alias cat="bat"
+    alias less="bat"
+    alias more="bat"
+fi
 
 alias tg=terragrunt
 alias tf=terraform
