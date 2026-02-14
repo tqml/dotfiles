@@ -8,6 +8,13 @@ setopt EXTENDED_HISTORY  # record command start time
 setopt appendhistory
 export HISTORY_IGNORE="(l|l *|ls|ls *|cd|cd ..*|cd -|z *|pwd|exit)"
 
+
+# %%---------------------------------------------- 
+# GITHUB
+# -------------------------------------------------- 
+export GITHUB_USER="tqml"
+
+
 # --------------------------------------------------------
 # -- HOMEBREW
 # --------------------------------------------------------
