@@ -1,5 +1,6 @@
-theme = carbonfox
+theme = iTerm2 Smoooooth
 font-family = Berkeley Mono
 macos-icon = official
 #theme = vercel
 shell-integration = zsh
+shell-integration-features = ssh-terminfo
