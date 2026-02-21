@@ -1,6 +1,16 @@
-theme = iTerm2 Smoooooth
+#theme = iTerm2 Smoooooth
+theme =  Solarized Osaka Night
+#theme = Vercel
+
 font-family = Berkeley Mono
+font-size = 12
+
 macos-icon = official
-#theme = vercel
+
 shell-integration = zsh
-shell-integration-features = ssh-terminfo
+shell-integration-features = ssh-terminfo,ssh-env,title
+
+
+keybind = alt+backspace=text:\x1b\x7f
+keybind = shift+enter=text:\n
+
