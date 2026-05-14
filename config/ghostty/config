@@ -1,6 +1,8 @@
 #theme = iTerm2 Smoooooth
-theme =  Solarized Osaka Night
+#theme =  Solarized Osaka Night
 #theme = Vercel
+
+theme = dark:Solarized Osaka Night,light:Catppuccin Latte
 
 
 font-family = Berkeley Mono
