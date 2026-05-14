@@ -1,7 +1,7 @@
 {
   "lastChangelogVersion": "0.74.0",
-  "defaultProvider": "github-copilot",
-  "defaultModel": "gpt-5.2-codex",
+  "defaultProvider": "lmstudio",
+  "defaultModel": "google/gemma-4-e2b",
   "defaultThinkingLevel": "medium",
   "hideThinkingBlock": true,
   "packages": [

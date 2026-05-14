@@ -1,16 +1,20 @@
   {
     "providers": {
-      "ollama": {
-        "baseUrl": "http://localhost:11434/v1",
+      "lmstudio": {
+        "baseUrl": "http://localhost:1234/v1",
         "api": "openai-completions",
-        "apiKey": "ollama",
+        "apiKey": "local-llm",
         "compat": {
           "supportsDeveloperRole": false,
           "supportsReasoningEffort": false
         },
         "models": [
           {
-            "id": "gemma4:e2b"
+            "id": "google/gemma-4-e2b",
+            "reasoning": true
+          },
+          {
+            "id": "liquid/lfm2.5-1.2b"
           }
         ]
       }
