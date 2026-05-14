@@ -1,0 +1,22 @@
+{
+  "lastChangelogVersion": "0.74.0",
+  "defaultProvider": "github-copilot",
+  "defaultModel": "gpt-5.2-codex",
+  "defaultThinkingLevel": "medium",
+  "hideThinkingBlock": true,
+  "packages": [
+    {
+      "source": "git:github.com/tmustier/pi-extensions",
+      "extensions": [
+        "usage-extension/index.ts"
+      ]
+    }
+  ],
+  "extensions": [
+    "~/Developer/Private/pi-personal-extensions/extensions/example-extension/index.ts"
+  ],
+  "skills": [
+    "~/Developer/Private/pi-personal-extensions/skills"
+  ],
+  "theme": "light"
+}
