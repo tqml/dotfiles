@@ -6,11 +6,14 @@ A backup of my dotfiles. Based on [michaeljsmalley/dotfiles](https://github.com/
 
 ## Usage
 
-Clone the repository to `~/dotfiles` then run the `makesymlinks.sh` script. This will then:
+Homebrew (or Linuxbrew on Linux) must already be installed. Clone the repository to `~/dotfiles` then run the `makesymlinks.sh` script. This will then:
 
-1. Backup any existing files in `~` with the same name
-2. Symlink the specified files from `~/dotfiles` to `~`
-3. Setup `zsh` and `oh-my-zsh`
+1. Backup any existing files in `~` with the same name to `~/dotfiles_old`
+2. Symlink the specified files from `~/dotfiles` to `~` (and `~/.config`)
+3. Install `zsh` (via `apt`/`yum` on Linux, or point you at `brew install zsh` on macOS) and set it up with `oh-my-zsh`
+4. Install any of the CLI tools below that are missing, via Homebrew
+
+The script is safe to re-run: existing correct symlinks, an already-installed shell, and already-installed packages are all left untouched.
 
 ## List of installed services
 
@@ -19,6 +22,10 @@ Clone the repository to `~/dotfiles` then run the `makesymlinks.sh` script. This
 - [Powerlevel10k](https://github.com/romkatv/powerlevel10k.git)
 - [Tmux plug-in manager](https://github.com/tmux-plugins/tpm)
 - [Tmux](https://github.com/gpakosz/.tmux)
+
+## CLI dependencies (installed via Homebrew)
+
+`starship`, `direnv`, `zoxide`, `mcfly`, `eza`, `bat`, `bun`, `ripgrep`, `gh`, `herdr`
 
 ## Credit
 

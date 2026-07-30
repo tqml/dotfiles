@@ -1,6 +1,8 @@
 setopt prompt_subst
 #autoload bashcompinit && bashcompinit
 
+HISTFILE="$HOME/.zsh_history"
+[ -f "$HISTFILE" ] || touch "$HISTFILE"
 HISTSIZE=50000
 SAVEHIST=50000
 setopt HIST_REDUCE_BLANKS  # remove unnecessary blanks
@@ -18,8 +20,15 @@ export GITHUB_USER="tqml"
 # --------------------------------------------------------
 # -- HOMEBREW
 # --------------------------------------------------------
-# rearange path to so that homebrew nano wins over builtin nano -> sideeffects?
-export PATH="/usr/local/sbin:/opt/homebrew/bin:$PATH"
+# Find brew wherever this platform installed it (macOS Apple Silicon, macOS
+# Intel, or Linuxbrew) and let it set up PATH/MANPATH/HOMEBREW_PREFIX etc.
+for _brew_bin in /opt/homebrew/bin/brew /usr/local/bin/brew /home/linuxbrew/.linuxbrew/bin/brew; do
+    if [ -x "$_brew_bin" ]; then
+        eval "$("$_brew_bin" shellenv)"
+        break
+    fi
+done
+unset _brew_bin
 
 
 # ------------------
@@ -34,16 +43,15 @@ export PATH="/usr/local/sbin:/opt/homebrew/bin:$PATH"
 #source "$HOME/.cargo/env"
 
 ZSH_DOTENV_PROMPT=false
-eval "$(starship init zsh)"
-eval "$(direnv hook zsh)"
-eval "$(zoxide init zsh)"
-eval "$(mcfly init zsh)"
-eval "$(direnv hook zsh)"
+command -v starship &> /dev/null && eval "$(starship init zsh)"
+command -v direnv &> /dev/null && eval "$(direnv hook zsh)"
+command -v zoxide &> /dev/null && eval "$(zoxide init zsh)"
+command -v mcfly &> /dev/null && eval "$(mcfly init zsh)"
 
 # --------------------------------------------------------
 # -- zsh Syntax Highlighting
 # --------------------------------------------------------
-ZSH_SYNTAX_HIGHLIGHTING_PLUGIN_PATH="/opt/homebrew/opt/zsh-fast-syntax-highlighting/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
+ZSH_SYNTAX_HIGHLIGHTING_PLUGIN_PATH="${HOMEBREW_PREFIX:-/opt/homebrew}/opt/zsh-fast-syntax-highlighting/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
 test -e $ZSH_SYNTAX_HIGHLIGHTING_PLUGIN_PATH && source $ZSH_SYNTAX_HIGHLIGHTING_PLUGIN_PATH
 
 

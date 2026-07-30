@@ -1,92 +1,156 @@
 #!/bin/bash
 
 ############################
-# .make.sh
-# This script creates symlinks from the home directory to any desired dotfiles in ~/dotfiles
+# makesymlinks.sh
+#
+# Symlinks dotfiles from this repo into $HOME (and ~/.config), makes sure
+# zsh + oh-my-zsh are installed, and installs the CLI tools the dotfiles
+# depend on via Homebrew (assumes Homebrew/Linuxbrew is already set up).
+#
+# Safe to re-run: existing correct symlinks are left untouched, and already
+# installed packages/shells are skipped.
 ############################
 
 set -euo pipefail # Exit on error, undefined variable, or failed pipe
 
 ########## Variables
 
-dir="$(pwd)"                # dotfiles directory
-olddir="$HOME/dotfiles_old" # old dotfiles backup directory
-current_workdir="$(pwd)"    # the directory we're currently in
+dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)" # dotfiles directory (absolute, stable across cwd)
+olddir="$HOME/dotfiles_old"                          # old dotfiles backup directory
 
 #----------------------
 #!!!!! IMPORTANT !!!!!
 #----------------------
 # Specify your files here
-# list of files/folders to symlink in homedir
-files="bash_profile iterm-config gitconfig gitignore profile tmux.conf terraformrc zfunc zprofile zshrc oh-my-zsh"
+# "source relative to $dir : destination relative to $HOME"
+dotfiles=(
+    "bash_profile:.bash_profile"
+    "bashrc:.bashrc"
+    "gitconfig:.gitconfig"
+    "gitignore:.gitignore"
+    "profile:.profile"
+    "tmux.conf:.tmux.conf"
+    "terraformrc:.terraformrc"
+    "zprofile:.zprofile"
+    "zshrc:.zshrc"
+    "iterm-config:.iterm-config"
+    "config/ghostty/config:.config/ghostty/config"
+    "config/starship.toml:.config/starship.toml"
+    "config/herdr/config.toml:.config/herdr/config.toml"
+)
 
-folders_to_create=".config .config/ghostty"
+# Homebrew formula -> binary it provides (differs for a couple, e.g. ripgrep -> rg)
+brew_deps=(
+    "starship:starship"
+    "direnv:direnv"
+    "zoxide:zoxide"
+    "mcfly:mcfly"
+    "eza:eza"
+    "bat:bat"
+    "bun:bun"
+    "ripgrep:rg"
+    "gh:gh"
+    "herdr:herdr"
+)
 
 ##########
 
-# create dotfiles_old in homedir
-echo -n "Creating $olddir for backup of any existing dotfiles in ~ ..."
-mkdir -p $olddir
-echo "done"
+# Symlink one dotfile, backing up whatever was there before.
+# Idempotent: a no-op if $dst is already the correct symlink.
+link_file() {
+    local src="$1" dst="$2"
 
-# change to the dotfiles directory
-echo -n "Changing to the $dir directory ..."
-cd $dir || exit
-echo "done"
-
-for folder in $folders_to_create; do
-    echo "Create folder '$folder' if not exist"
-    mkdir -p "$HOME/$folder"
-done
-
-# move any existing dotfiles in homedir to dotfiles_old directory, then create symlinks from the homedir to any files in the ~/dotfiles directory specified in $files
-for file in $files; do
-
-    # check if file already exists
-
-    if test -f "$HOME/.$file"; then
-        echo "Moving any existing dotfiles from ~ to $olddir"
-        mv "$HOME/.$file" "$olddir"
+    if [ -L "$dst" ] && [ "$(readlink "$dst")" = "$src" ]; then
+        return
     fi
 
-    echo "Creating symlink to $file in home directory."
-    ln -s "$dir/$file" "$HOME/.$file"
+    mkdir -p "$(dirname "$dst")"
+
+    if [ -e "$dst" ] || [ -L "$dst" ]; then
+        mkdir -p "$olddir"
+        echo "Backing up existing $dst to $olddir"
+        mv "$dst" "$olddir/"
+    fi
+
+    ln -s "$src" "$dst"
+    echo "Linked $dst -> $src"
+}
+
+echo "Linking dotfiles into $HOME ..."
+for entry in "${dotfiles[@]}"; do
+    src="${entry%%:*}"
+    rel_dst="${entry##*:}"
+    link_file "$dir/$src" "$HOME/$rel_dst"
 done
 
-install_zsh() {
-    # Test to see if zshell is installed.  If it is:
-    if [ -f /bin/zsh -o -f /usr/bin/zsh ]; then
-        # Clone my oh-my-zsh repository from GitHub only if it isn't already present
-        if [[ ! -d $dir/oh-my-zsh/ ]]; then
-            git clone http://github.com/robbyrussell/oh-my-zsh.git
-        fi
-        # Set the default shell to zsh if it isn't currently set to zsh
-        if [[ ! $SHELL == $(which zsh) ]]; then
-            chsh -s "$(which zsh)"
-        fi
+# Print the shell configured for the current user in the system's user database,
+# rather than trusting the (possibly stale) $SHELL env var, so chsh only runs once.
+current_login_shell() {
+    if command -v getent &> /dev/null; then
+        getent passwd "$(id -un)" | cut -d: -f7
+    elif command -v dscl &> /dev/null; then
+        dscl . -read "/Users/$(id -un)" UserShell 2>/dev/null | awk '{print $2}'
     else
-        # If zsh isn't installed, get the platform of the current machine
-        platform=$(uname)
-        # If the platform is Linux, try an apt-get to install zsh and then recurse
-        if [[ $platform == 'Linux' ]]; then
-            if [[ -f /etc/redhat-release ]]; then
-                sudo yum install zsh
-                install_zsh
-            fi
-            if [[ -f /etc/debian_version ]]; then
-                sudo apt-get install zsh
-                install_zsh
-            fi
-        # If the platform is OS X, tell the user to install zsh :)
-        elif [[ $platform == 'Darwin' ]]; then
-            echo "Please install zsh, then re-run this script!"
-            exit
-        fi
+        echo "$SHELL"
     fi
 }
 
-#install_zsh
+install_zsh() {
+    if ! command -v zsh &> /dev/null; then
+        platform=$(uname)
+        if [[ $platform == 'Linux' ]]; then
+            if [ -f /etc/debian_version ]; then
+                sudo apt-get update
+                sudo apt-get install -y zsh
+            elif [ -f /etc/redhat-release ]; then
+                sudo yum install -y zsh
+            else
+                echo "Unrecognized Linux distro; install zsh manually, then re-run this script."
+                return
+            fi
+        elif [[ $platform == 'Darwin' ]]; then
+            echo "zsh not found. Install it with 'brew install zsh', then re-run this script."
+            return
+        else
+            echo "Unsupported platform ($platform); install zsh manually, then re-run this script."
+            return
+        fi
+    fi
 
-# Install Autosuggestions
-#git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+    if [[ ! -d "$dir/oh-my-zsh" ]]; then
+        git clone --depth 1 https://github.com/robbyrussell/oh-my-zsh.git "$dir/oh-my-zsh"
+    fi
+    link_file "$dir/oh-my-zsh" "$HOME/.oh-my-zsh"
 
+    zsh_path="$(command -v zsh)"
+    if [[ "$(current_login_shell)" != "$zsh_path" ]]; then
+        chsh -s "$zsh_path"
+    fi
+}
+
+install_zsh
+
+install_dependencies() {
+    if ! command -v brew &> /dev/null; then
+        echo "Homebrew not found on PATH; skipping dependency install (starship, direnv, zoxide, mcfly, eza, bat, bun, ripgrep, gh, herdr)."
+        return
+    fi
+
+    local missing=()
+    for entry in "${brew_deps[@]}"; do
+        local pkg="${entry%%:*}" bin="${entry##*:}"
+        command -v "$bin" &> /dev/null || missing+=("$pkg")
+    done
+
+    if [ ${#missing[@]} -eq 0 ]; then
+        echo "All Homebrew dependencies already installed."
+        return
+    fi
+
+    echo "Installing missing dependencies via Homebrew: ${missing[*]}"
+    brew install "${missing[@]}"
+}
+
+install_dependencies
+
+echo "Done."
