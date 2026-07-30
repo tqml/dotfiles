@@ -31,17 +31,6 @@ done
 unset _brew_bin
 
 
-# ------------------
-# -- Oh-My-Zsh
-# ------------------
-#export ZSH="$HOME/.oh-my-zsh" # Path to your oh-my-zsh installation.
-#plugins=(git brew docker)
-# ZSH_THEME=""
-#source "$ZSH/oh-my-zsh.sh"
-
-# Others
-#source "$HOME/.cargo/env"
-
 ZSH_DOTENV_PROMPT=false
 command -v starship &> /dev/null && eval "$(starship init zsh)"
 command -v direnv &> /dev/null && eval "$(direnv hook zsh)"
@@ -82,8 +71,6 @@ else
     alias more="bat"
 fi
 
-alias tg=terragrunt
-alias tf=terraform
 alias weather="curl wttr.in/vie"
 alias wsearch="web_search duckduckgo"
 
@@ -144,11 +131,6 @@ test -d "$HOME/go/bin" && export PATH="$PATH:$HOME/go/bin"
 test -d "$HOME/.cargo/bin" && export PATH="$PATH:$HOME/.cargo/bin"
 
 
-# ------------------
-# -- MATLAB
-# ------------------
-
-
 function wetta() {
     echo "-- Fetching: wttr.in/$1"
 
@@ -166,15 +148,6 @@ function cheat() {
 
 #alias docker=podman
 alias docktop="docker attach ctop > /dev/null || docker run --rm -ti --name=ctop --volume /var/run/docker.sock:/var/run/docker.sock:ro quay.io/vektorlab/ctop:latest"
-
-# ------------------
-# -- MATLAB
-# ------------------
-
-# Make an alias for MATLAB
-if [[ $(uname) == 'Darwin' ]]; then
-    alias matlab="/Applications/MATLAB_R2021b.app/bin/matlab -nosplash -nodesktop"
-fi
 
 # ------------------
 # -- Terraform
@@ -237,42 +210,38 @@ fi
 # %%    PNPM
 #------------------------------------------------------------
 
-
-# pnpm
-export PNPM_HOME="/Users/benjaminkulnik/Library/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-# pnpm end
-
-
+if [[ $(uname) == 'Darwin' ]]; then
+    export PNPM_HOME="$HOME/Library/pnpm"
+else
+    export PNPM_HOME="$HOME/.local/share/pnpm"
+fi
+if [ -d "$PNPM_HOME" ]; then
+    case ":$PATH:" in
+      *":$PNPM_HOME:"*) ;;
+      *) export PATH="$PNPM_HOME:$PATH" ;;
+    esac
+fi
 
 # >>> juliaup initialize >>>
-
-# !! Contents within this block are managed by juliaup !!
-
-path=('/Users/benjaminkulnik/.juliaup/bin' $path)
-export PATH
-
+# !! Managed by juliaup; path generalized to $HOME so it works on any account !!
+test -d "$HOME/.juliaup/bin" && path=("$HOME/.juliaup/bin" $path) && export PATH
 # <<< juliaup initialize <<<
 
-PATH=~/.console-ninja/.bin:$PATH
-
+test -d "$HOME/.console-ninja/.bin" && export PATH="$HOME/.console-ninja/.bin:$PATH"
 
 # >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/opt/homebrew/Caskroom/miniforge/base/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh" ]; then
-        . "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh"
+# !! Managed by 'conda init'; only runs when miniforge is actually installed !!
+_conda_bin="${HOMEBREW_PREFIX:-/opt/homebrew}/Caskroom/miniforge/base/bin/conda"
+if [ -x "$_conda_bin" ]; then
+    __conda_setup="$("$_conda_bin" 'shell.zsh' 'hook' 2> /dev/null)"
+    if [ $? -eq 0 ]; then
+        eval "$__conda_setup"
     else
-        export PATH="/opt/homebrew/Caskroom/miniforge/base/bin:$PATH"
+        . "${_conda_bin%/bin/conda}/etc/profile.d/conda.sh" 2> /dev/null
     fi
+    unset __conda_setup
 fi
-unset __conda_setup
+unset _conda_bin
 # <<< conda initialize <<<
 
 export PATH="$HOME/.local/bin:$PATH"
@@ -280,3 +249,12 @@ export PATH="$HOME/.local/bin:$PATH"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# --------------------------------------------------------
+# -- Host-specific overrides
+# --------------------------------------------------------
+# Anything that's true for this machine only (one-off app paths, local
+# secrets, per-host aliases) belongs in .zshrc.local, not here. See
+# zshrc.local.example for the pattern. Loaded last so it can override
+# anything set above.
+[ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"

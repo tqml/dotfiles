@@ -1,10 +1,8 @@
-oh-my-zsh/
-
 # Git Configurations that are local to the machine
 gitconfig-local
 #gitconfig-private
 
-# Ignore local files
+# Ignore local files (also covers zshrc.local - see zshrc.local.example)
 *.local
 
 # Python

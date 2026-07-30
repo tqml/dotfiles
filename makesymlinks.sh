@@ -4,8 +4,8 @@
 # makesymlinks.sh
 #
 # Symlinks dotfiles from this repo into $HOME (and ~/.config), makes sure
-# zsh + oh-my-zsh are installed, and installs the CLI tools the dotfiles
-# depend on via Homebrew (assumes Homebrew/Linuxbrew is already set up).
+# zsh is installed, and installs the CLI tools the dotfiles depend on via
+# Homebrew (assumes Homebrew/Linuxbrew is already set up).
 #
 # Safe to re-run: existing correct symlinks are left untouched, and already
 # installed packages/shells are skipped.
@@ -33,6 +33,7 @@ dotfiles=(
     "terraformrc:.terraformrc"
     "zprofile:.zprofile"
     "zshrc:.zshrc"
+    "zshrc.local:.zshrc.local"
     "iterm-config:.iterm-config"
     "config/ghostty/config:.config/ghostty/config"
     "config/starship.toml:.config/starship.toml"
@@ -76,6 +77,13 @@ link_file() {
     echo "Linked $dst -> $src"
 }
 
+# Bootstrap a per-host zshrc.local from the template on first run. It's
+# gitignored, so this only happens once per clone/machine and never gets
+# clobbered afterwards.
+if [ ! -e "$dir/zshrc.local" ] && [ -f "$dir/zshrc.local.example" ]; then
+    cp "$dir/zshrc.local.example" "$dir/zshrc.local"
+fi
+
 echo "Linking dotfiles into $HOME ..."
 for entry in "${dotfiles[@]}"; do
     src="${entry%%:*}"
@@ -116,11 +124,6 @@ install_zsh() {
             return
         fi
     fi
-
-    if [[ ! -d "$dir/oh-my-zsh" ]]; then
-        git clone --depth 1 https://github.com/robbyrussell/oh-my-zsh.git "$dir/oh-my-zsh"
-    fi
-    link_file "$dir/oh-my-zsh" "$HOME/.oh-my-zsh"
 
     zsh_path="$(command -v zsh)"
     if [[ "$(current_login_shell)" != "$zsh_path" ]]; then

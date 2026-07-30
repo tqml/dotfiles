@@ -1,0 +1,22 @@
+# ~/.zshrc.local
+#
+# Machine-specific zsh config. This file is gitignored (see .gitignore) so
+# each host keeps its own copy; makesymlinks.sh symlinks it to ~/.zshrc.local
+# and the shared zshrc sources it last, so anything here can override the
+# shared defaults.
+#
+# Put things here that are true for THIS machine only and can't reasonably
+# be generalized in the shared zshrc: one-off app install paths/versions,
+# local secrets/tokens, per-host aliases. Copy the bits below that apply and
+# adjust the paths.
+
+# Example: a specific MATLAB version installed only on this machine.
+# if [[ $(uname) == 'Darwin' ]]; then
+#     alias matlab="/Applications/MATLAB_R2021b.app/bin/matlab -nosplash -nodesktop"
+# fi
+
+# Example: a work-only GitHub identity that differs from the default in zshrc.
+# export GITHUB_USER="my-work-handle"
+
+# Example: a host-local secret or token.
+# export SOME_API_TOKEN="..."
