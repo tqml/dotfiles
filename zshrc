@@ -150,12 +150,15 @@ function cheat() {
 alias docktop="docker attach ctop > /dev/null || docker run --rm -ti --name=ctop --volume /var/run/docker.sock:/var/run/docker.sock:ro quay.io/vektorlab/ctop:latest"
 
 # ------------------
-# -- Terraform
+# -- OpenTofu
 # ------------------
 
 alias tf=tofu
 alias tg=terragrunt
 alias tgps=tg plan -no-color | grep -E '^[[:punct:]]|Plan'
+
+# Point terragrunt at opentofu instead of a (possibly absent) terraform binary
+command -v tofu &> /dev/null && export TERRAGRUNT_TFPATH="$(command -v tofu)"
 
 # ------------------
 # -- Nix

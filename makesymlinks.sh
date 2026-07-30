@@ -30,7 +30,7 @@ dotfiles=(
     "gitignore:.gitignore"
     "profile:.profile"
     "tmux.conf:.tmux.conf"
-    "terraformrc:.terraformrc"
+    "tofurc:.tofurc"
     "zprofile:.zprofile"
     "zshrc:.zshrc"
     "zshrc.local:.zshrc.local"
@@ -52,6 +52,7 @@ brew_deps=(
     "ripgrep:rg"
     "gh:gh"
     "herdr:herdr"
+    "opentofu:tofu"
 )
 
 ##########
@@ -83,6 +84,9 @@ link_file() {
 if [ ! -e "$dir/zshrc.local" ] && [ -f "$dir/zshrc.local.example" ]; then
     cp "$dir/zshrc.local.example" "$dir/zshrc.local"
 fi
+
+# tofurc's plugin_cache_dir points here; OpenTofu errors out if it's missing.
+mkdir -p "$HOME/.tofu.d/plugin-cache"
 
 echo "Linking dotfiles into $HOME ..."
 for entry in "${dotfiles[@]}"; do
@@ -135,7 +139,7 @@ install_zsh
 
 install_dependencies() {
     if ! command -v brew &> /dev/null; then
-        echo "Homebrew not found on PATH; skipping dependency install (starship, direnv, zoxide, mcfly, eza, bat, bun, ripgrep, gh, herdr)."
+        echo "Homebrew not found on PATH; skipping dependency install (starship, direnv, zoxide, mcfly, eza, bat, bun, ripgrep, gh, herdr, opentofu)."
         return
     fi
 

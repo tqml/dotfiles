@@ -1,2 +1,2 @@
 # Keep central cache of providers
-plugin_cache_dir = "$HOME/.terraform.d/plugin-cache"
+plugin_cache_dir = "$HOME/.tofu.d/plugin-cache"
