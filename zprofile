@@ -14,6 +14,7 @@ fi
 # Select the first editor that is found in path.
 EDITOR_CHOICES=(
     "nano"
+    "hx"
     "micro"
     "vim"
     "vi"

@@ -11,10 +11,42 @@ setopt appendhistory
 export HISTORY_IGNORE="(l|l *|ls|ls *|cd|cd ..*|cd -|z *|pwd|exit)"
 
 
+
+
+# %%---------------------------------------------- 
+# GIT
+# -------------------------------------------------- 
+
+
+function git_worktree() {
+    # Usage: git_worktree <branch_name>
+    # Automatically does the following
+    # 1. creates the branch
+    # 2. creates a worktree for the branch at directory <REPO_ROOT>/../<REPO_NAME>-worktrees/<branch_name_normalized>
+    # 3. checks out the branch in the worktree
+    # 4. cd's into the worktree directory
+
+    local branch_name="$1"
+    local repo_root=$(git rev-parse --show-toplevel)
+    local repo_name=$(basename "$repo_root")
+    local worktree_base_dir="$repo_root/../${repo_name}-worktrees"
+    local worktree_dir="$worktree_base_dir/${branch_name//\//-}"  # replace / with - in branch name for directory name
+
+    git branch "$branch_name"
+    mkdir -p "$worktree_base_dir"
+    git worktree add "$worktree_dir" "$branch_name"
+    cd "$worktree_dir" || return 1
+}
+
+
+
 # %%---------------------------------------------- 
 # GITHUB
 # -------------------------------------------------- 
 export GITHUB_USER="tqml"
+
+
+
 
 
 # --------------------------------------------------------
@@ -117,6 +149,11 @@ function ask() {
 alias sjulia="julia -O0 --compile=min --startup=no"
 alias sysjulia="julia -O0 --compile=min --startup=no --project=@. --sysimage=JuliaSysimage.dylib --sysimage-native-code=yes"
 export JULIA_EDITOR="code"
+
+# Add ~/.julia/bin to PATH
+if [ -d "$HOME/.julia/bin" ]; then
+    export PATH="$HOME/.julia/bin:$PATH"
+fi
 
 # ------------------
 # -- Go
@@ -253,6 +290,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+
 # --------------------------------------------------------
 # -- Host-specific overrides
 # --------------------------------------------------------
@@ -261,3 +299,12 @@ export NVM_DIR="$HOME/.nvm"
 # zshrc.local.example for the pattern. Loaded last so it can override
 # anything set above.
 [ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
+
+# Added by Antigravity IDE
+export PATH="/Users/benjaminkulnik/.antigravity-ide/antigravity-ide/bin:$PATH"
+
+# >>> grok installer >>>
+export PATH="$HOME/.grok/bin:$PATH"
+fpath=(~/.grok/completions/zsh $fpath)
+autoload -Uz compinit && compinit -C
+# <<< grok installer <<<

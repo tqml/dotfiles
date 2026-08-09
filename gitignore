@@ -95,3 +95,4 @@ terraform.tfstate.backup
 # Python
 .python-version
 .pyc
+**/.claude/settings.local.json
