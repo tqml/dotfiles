@@ -106,6 +106,9 @@ fi
 alias weather="curl wttr.in/vie"
 alias wsearch="web_search duckduckgo"
 
+# Second Claude account: keeps its own config/auth dir separate from the default ~/.claude
+alias claude2='CLAUDE_CONFIG_DIR="$HOME/.claude2" claude'
+
 
 
 # ------------------
