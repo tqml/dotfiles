@@ -6,17 +6,12 @@ input=$(cat)
 
 model=$(echo "$input" | jq -r '.model.display_name // empty')
 cwd=$(echo "$input" | jq -r '.workspace.current_dir // .cwd // empty')
-repo_owner=$(echo "$input" | jq -r '.workspace.repo.owner // empty')
 repo_name=$(echo "$input" | jq -r '.workspace.repo.name // empty')
 effort=$(echo "$input" | jq -r '.effort.level // empty')
-ctx_used=$(echo "$input" | jq -r '.context_window.used_percentage // empty')
+ctx_used=$(echo "$input" | jq -r '.context_window.used_percentage // 0')
 
-repo=""
-if [ -n "$repo_owner" ] && [ -n "$repo_name" ]; then
-  repo="$repo_owner/$repo_name"
-elif [ -n "$repo_name" ]; then
-  repo="$repo_name"
-fi
+CYAN=$'\033[36m'
+RESET=$'\033[0m'
 
 branch=""
 if [ -n "$cwd" ]; then
@@ -24,20 +19,63 @@ if [ -n "$cwd" ]; then
 fi
 
 repo_branch=""
-if [ -n "$repo" ] && [ -n "$branch" ]; then
-  repo_branch="$repo ($branch)"
-elif [ -n "$repo" ]; then
-  repo_branch="$repo"
+if [ -n "$repo_name" ] && [ -n "$branch" ]; then
+  repo_branch="${repo_name}:${CYAN}${branch}${RESET}"
+elif [ -n "$repo_name" ]; then
+  repo_branch="$repo_name"
 elif [ -n "$branch" ]; then
-  repo_branch="$branch"
+  repo_branch="${CYAN}${branch}${RESET}"
 fi
 
-five=$(echo "$input" | jq -r '.rate_limits.five_hour.used_percentage // empty')
-week=$(echo "$input" | jq -r '.rate_limits.seven_day.used_percentage // empty')
-five_resets_at=$(echo "$input" | jq -r '.rate_limits.five_hour.resets_at // empty')
-week_resets_at=$(echo "$input" | jq -r '.rate_limits.seven_day.resets_at // empty')
+five_raw=$(echo "$input" | jq -r '.rate_limits.five_hour.used_percentage // empty')
+week_raw=$(echo "$input" | jq -r '.rate_limits.seven_day.used_percentage // empty')
+five_resets_raw=$(echo "$input" | jq -r '.rate_limits.five_hour.resets_at // empty')
+week_resets_raw=$(echo "$input" | jq -r '.rate_limits.seven_day.resets_at // empty')
 
 now=$(date +%s)
+
+# rate_limits is account-wide (not per-session) but only arrives after the
+# first API response of a session, so cache the last known values on disk
+# and use them at startup until fresh data replaces them.
+CACHE_FILE="$HOME/.cache/claude-statusline-ratelimits.json"
+cached_five="" cached_five_resets="" cached_week="" cached_week_resets=""
+if [ -f "$CACHE_FILE" ]; then
+  cached_five=$(jq -r '.five // empty' "$CACHE_FILE" 2>/dev/null)
+  cached_five_resets=$(jq -r '.five_resets_at // empty' "$CACHE_FILE" 2>/dev/null)
+  cached_week=$(jq -r '.week // empty' "$CACHE_FILE" 2>/dev/null)
+  cached_week_resets=$(jq -r '.week_resets_at // empty' "$CACHE_FILE" 2>/dev/null)
+fi
+
+five="" five_resets_at="" five_stale=0
+if [ -n "$five_raw" ]; then
+  five="$five_raw"
+  five_resets_at="$five_resets_raw"
+elif [ -n "$cached_five" ] && [ -n "$cached_five_resets" ] && [ "$cached_five_resets" -gt "$now" ]; then
+  five="$cached_five"
+  five_resets_at="$cached_five_resets"
+  five_stale=1
+fi
+
+week="" week_resets_at="" week_stale=0
+if [ -n "$week_raw" ]; then
+  week="$week_raw"
+  week_resets_at="$week_resets_raw"
+elif [ -n "$cached_week" ] && [ -n "$cached_week_resets" ] && [ "$cached_week_resets" -gt "$now" ]; then
+  week="$cached_week"
+  week_resets_at="$cached_week_resets"
+  week_stale=1
+fi
+
+if [ -n "$five_raw" ] || [ -n "$week_raw" ]; then
+  mkdir -p "$(dirname "$CACHE_FILE")" 2>/dev/null
+  jq -n \
+    --arg five "${five_raw:-$cached_five}" \
+    --arg five_resets_at "${five_resets_raw:-$cached_five_resets}" \
+    --arg week "${week_raw:-$cached_week}" \
+    --arg week_resets_at "${week_resets_raw:-$cached_week_resets}" \
+    '{five: ($five|tonumber?), five_resets_at: ($five_resets_at|tonumber?), week: ($week|tonumber?), week_resets_at: ($week_resets_at|tonumber?)}' \
+    > "$CACHE_FILE" 2>/dev/null
+fi
 
 format_duration() {
   local secs="$1"
@@ -70,7 +108,6 @@ fi
 GREEN=$'\033[32m'
 YELLOW=$'\033[33m'
 RED=$'\033[31m'
-RESET=$'\033[0m'
 
 color_for() {
   local pct="$1"
@@ -85,14 +122,18 @@ color_for() {
 
 limits=""
 if [ -n "$five" ]; then
-  five_part="5h:$(color_for "$five")$(printf '%.0f' "$five")%${RESET}"
+  five_tilde=""
+  [ "$five_stale" -eq 1 ] && five_tilde="~"
+  five_part="5h:$(color_for "$five")${five_tilde}$(printf '%.0f' "$five")%${RESET}"
   if [ -n "$five_remaining" ]; then
     five_part="$five_part (resets in ${five_remaining})"
   fi
   limits="$five_part"
 fi
 if [ -n "$week" ]; then
-  week_part="7d:$(color_for "$week")$(printf '%.0f' "$week")%${RESET}"
+  week_tilde=""
+  [ "$week_stale" -eq 1 ] && week_tilde="~"
+  week_part="7d:$(color_for "$week")${week_tilde}$(printf '%.0f' "$week")%${RESET}"
   if [ -n "$week_remaining" ]; then
     week_part="$week_part (resets in ${week_remaining})"
   fi
@@ -107,16 +148,24 @@ extra=""
 if [ -n "$effort" ]; then
   extra="effort:$effort"
 fi
-if [ -n "$ctx_used" ]; then
-  if [ -n "$extra" ]; then
-    extra="$extra ctx:$(printf '%.0f' "$ctx_used")%"
-  else
-    extra="ctx:$(printf '%.0f' "$ctx_used")%"
-  fi
+ctx_part="ctx:$(color_for "$ctx_used")$(printf '%.0f' "$ctx_used")%${RESET}"
+if [ -n "$extra" ]; then
+  extra="$extra $ctx_part"
+else
+  extra="$ctx_part"
+fi
+
+usage=""
+if [ -n "$extra" ] && [ -n "$limits" ]; then
+  usage="$extra $limits"
+elif [ -n "$extra" ]; then
+  usage="$extra"
+else
+  usage="$limits"
 fi
 
 output=""
-for part in "$model" "$repo_branch" "$extra" "$limits"; do
+for part in "$model" "$repo_branch" "$usage"; do
   if [ -n "$part" ]; then
     if [ -n "$output" ]; then
       output="$output | $part"
