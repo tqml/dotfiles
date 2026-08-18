@@ -36,8 +36,10 @@ now=$(date +%s)
 
 # rate_limits is account-wide (not per-session) but only arrives after the
 # first API response of a session, so cache the last known values on disk
-# and use them at startup until fresh data replaces them.
-CACHE_FILE="$HOME/.cache/claude-statusline-ratelimits.json"
+# and use them at startup until fresh data replaces them. Scoped to
+# CLAUDE_CONFIG_DIR since separate installs (e.g. claude2) are separate
+# accounts with independent rate limits.
+CACHE_FILE="${CLAUDE_CONFIG_DIR:-$HOME/.claude}/statusline-ratelimits-cache.json"
 cached_five="" cached_five_resets="" cached_week="" cached_week_resets=""
 if [ -f "$CACHE_FILE" ]; then
   cached_five=$(jq -r '.five // empty' "$CACHE_FILE" 2>/dev/null)
