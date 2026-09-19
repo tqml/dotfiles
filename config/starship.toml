@@ -19,3 +19,13 @@ truncation_symbol = "…/"
 "Downloads" = " "
 "Music" = " "
 "Pictures" = " "
+
+# gitconfig switches user.email per directory (see includeIf in
+# ~/dotfiles/gitconfig), so show which identity is actually active here
+# rather than assuming.
+[custom.git_user]
+description = "Shows the git identity (user.email) commits here will use"
+command = "git config user.email"
+when = "git rev-parse --is-inside-work-tree >/dev/null 2>&1 && git config user.email >/dev/null"
+format = "[as $output]($style) "
+style = "dimmed yellow"

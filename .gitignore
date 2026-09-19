@@ -1,5 +1,6 @@
 # Git Configurations that are local to the machine
 gitconfig-local
+gitconfig-os
 #gitconfig-private
 
 # Ignore local files (also covers zshrc.local - see zshrc.local.example)
