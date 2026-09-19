@@ -308,3 +308,6 @@ export PATH="$HOME/.grok/bin:$PATH"
 fpath=(~/.grok/completions/zsh $fpath)
 autoload -Uz compinit && compinit -C
 # <<< grok installer <<<
+
+# Added by the Hunk installer (https://hunk.dev)
+export PATH='/home/claudius/.hunk/bin':"$PATH"
