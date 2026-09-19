@@ -109,6 +109,17 @@ alias wsearch="web_search duckduckgo"
 # Second Claude account: keeps its own config/auth dir separate from the default ~/.claude
 alias claude2='CLAUDE_CONFIG_DIR="$HOME/.claude2" claude'
 
+function q() {
+    # quick one-off question, no chat session
+    # usage: q "your question here"
+    # or (without quotes) q your question here
+    if [[ $(uname) == 'Darwin' ]]; then
+        fm respond "$*"
+    else
+        claude -p "$*"
+    fi
+}
+
 
 
 # ------------------
@@ -125,20 +136,6 @@ export HOMEBREW_CLEANUP_MAX_AGE_DAYS=7
 # brew install gnupg pinentry-mac
 export GPG_TTY=$(tty)
 gpgconf --launch gpg-agent
-
-
-# ------------------
-# -- Copilot
-# ------------------
-
-
-function ask() {
-    # ask copilot to suggest a shell command
-    # usage. ask "your question here"
-    # or (without quotes) ask your question here
-    # ask your question here 
-    gh copilot suggest -t shell "$@" 
-}
 
 
 # ------------------
