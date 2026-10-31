@@ -77,3 +77,6 @@
 
 [includeIf "gitdir:~/Developer/OpenSourceProjects/"]
 	path = "~/dotfiles/gitconfig-private"
+
+[includeIf "gitdir:/data/Developer/Friva/"]
+	path = "~/dotfiles/gitconfig-work"

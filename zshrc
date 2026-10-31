@@ -82,8 +82,10 @@ alias c=z
 alias c="z"
 
 
-# Check if EZA is installed
-if command -v eza &> /dev/null; then
+# Check if EZA is installed (skipped in agent shells, they expect GNU ls flags/output)
+if [[ -n $CLAUDECODE ]]; then
+    :
+elif command -v eza &> /dev/null; then
     alias ls="eza --icons --git"
     alias l="eza -l --icons --git -a"
     alias ll="eza -l --icons --git -a"
@@ -108,6 +110,14 @@ alias wsearch="web_search duckduckgo"
 
 # Second Claude account: keeps its own config/auth dir separate from the default ~/.claude
 alias claude2='CLAUDE_CONFIG_DIR="$HOME/.claude2" claude'
+
+# ------------------
+# -- Granted (assume)
+# ------------------
+# `assume` must be sourced, not exec'd, so it can export AWS credentials into
+# the current shell instead of a throwaway subprocess whose env vars vanish
+# on exit. See: https://docs.commonfate.io/granted/getting-started
+command -v assume &> /dev/null && alias assume=". assume"
 
 function q() {
     # quick one-off question, no chat session
@@ -291,6 +301,13 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+# GitHub Packages token for repos whose .npmrc uses ${NODE_AUTH_TOKEN} (and for
+# `docker build --secret id=NODE_AUTH_TOKEN,env=NODE_AUTH_TOKEN`). Read from
+# ~/.npmrc so the token itself never lands in this synced file.
+if [ -z "$NODE_AUTH_TOKEN" ] && [ -f "$HOME/.npmrc" ]; then
+    NODE_AUTH_TOKEN=$(sed -n 's#^//npm.pkg.github.com/:_authToken=##p' "$HOME/.npmrc" | head -n 1)
+    [ -n "$NODE_AUTH_TOKEN" ] && export NODE_AUTH_TOKEN || unset NODE_AUTH_TOKEN
+fi
 
 # --------------------------------------------------------
 # -- Host-specific overrides
