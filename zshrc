@@ -312,3 +312,6 @@ autoload -Uz compinit && compinit -C
 
 # Added by the Hunk installer (https://hunk.dev)
 export PATH='/home/claudius/.hunk/bin':"$PATH"
+
+# Envoke shell integration
+[ -r "$HOME/.config/envoke/envoke.sh" ] && source "$HOME/.config/envoke/envoke.sh"
