@@ -192,6 +192,7 @@ alias docktop="docker attach ctop > /dev/null || docker run --rm -ti --name=ctop
 
 alias tf=tofu
 alias tg=terragrunt
+alias tp=tofu-press
 alias tgps=tg plan -no-color | grep -E '^[[:punct:]]|Plan'
 
 # Point terragrunt at opentofu instead of a (possibly absent) terraform binary
