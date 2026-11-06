@@ -1,8 +1,8 @@
 {
-  "lastChangelogVersion": "0.74.0",
-  "defaultProvider": "lmstudio",
-  "defaultModel": "google/gemma-4-e2b",
-  "defaultThinkingLevel": "medium",
+  "lastChangelogVersion": "1.5.0",
+  "defaultProvider": "openai-codex",
+  "defaultModel": "gpt-5.6-terra",
+  "defaultThinkingLevel": "low",
   "hideThinkingBlock": true,
   "packages": [
     {
@@ -13,10 +13,18 @@
     }
   ],
   "extensions": [
-    "~/Developer/Private/pi-personal-extensions/extensions/example-extension/index.ts"
+    "~/Developer/pi-extensions/system-theme-sync/index.ts",
+    "~/Developer/pi-extensions/subagent/index.ts",
+    "~/Developer/pi-extensions/cw-logs/index.ts"
   ],
   "skills": [
     "~/Developer/Private/pi-personal-extensions/skills"
   ],
-  "theme": "light"
+  "theme": "dark",
+  "compaction": {
+    "enabled": false
+  },
+  "extensionChangelogVersions": {
+    "{\"source\":\"git:github.com/tmustier/pi-extensions\",\"scope\":\"user\"}": "0.1.61"
+  }
 }
